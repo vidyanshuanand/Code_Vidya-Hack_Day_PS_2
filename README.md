@@ -75,3 +75,7 @@ Solo Participant — Code Vidya Hack Day
 
 ## Selected Problem Statement
 **PS 2 — Dynamic Certificate Generation & Verification Portal**
+
+
+## UI update
+The certificate generator uses a responsive layout with a persistent Save as PDF action, so the action remains accessible when the screen is rotated or viewed on tablets/mobile.
