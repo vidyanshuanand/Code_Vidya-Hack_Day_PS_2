@@ -79,3 +79,7 @@ Solo Participant — Code Vidya Hack Day
 
 ## UI update
 The certificate generator uses a responsive layout with a persistent Save as PDF action, so the action remains accessible when the screen is rotated or viewed on tablets/mobile.
+
+
+## Certificate template gallery
+The Generate workspace includes four selectable templates: Modern Gold, Executive Navy, Pearl Minimal, and Emerald Honors. Each template is an HTML/CSS theme applied to the live certificate preview and remains print-ready.
