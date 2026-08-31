@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>CertiFlow AI — Certificate Intelligence Platform</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Playfair+Display:wght@500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 :root{--bg:#070a12;--panel:#0e1320;--panel2:#111827;--line:#20293a;--text:#eef2ff;--muted:#8c97ab;--accent:#7c5cff;--accent2:#20d6a0;--danger:#ff647c;--warn:#f4b740;--shadow:0 24px 70px rgba(0,0,0,.35)}
@@ -19,6 +19,21 @@
 .cert.theme-emerald{background:linear-gradient(145deg,#fbfffd,#e4f2eb);border-color:#4d8b76;color:#173b31}.cert.theme-emerald:before{border-color:#72a995;box-shadow:inset 0 0 0 7px rgba(77,139,118,.08)}.cert.theme-emerald:after{color:#4d8b76}.cert.theme-emerald .ctop{color:#376f5e}.cert.theme-emerald .rule{background:#4d8b76}.cert.theme-emerald .name{color:#23624f}.cert.theme-emerald .seal{border-color:#4d8b76;color:#356e5c}.cert.theme-emerald .signature{color:#2f6a58}
 .cert.theme-navy .qr,.cert.theme-pearl .qr,.cert.theme-emerald .qr{border-color:#b7c3cf}
 @media(max-width:700px){.template-grid{grid-template-columns:repeat(2,1fr)}}
+/* Premium certificate redesign v5: no corner ornaments, typography + background driven themes */
+.cert{border:1px solid #c8b98f!important;border-radius:10px!important;padding:38px 48px!important;box-shadow:0 20px 55px rgba(0,0,0,.24), inset 0 0 0 6px rgba(255,255,255,.28);font-family:'DM Sans',sans-serif}
+.cert:before{inset:14px!important;border:1px solid rgba(117,99,61,.32)!important;box-shadow:none!important}
+.cert:after{content:'✦';top:18px!important;font-size:18px!important}
+.cert h3{font-family:'Playfair Display',serif!important;font-weight:600!important;letter-spacing:-.02em!important;font-size:32px!important}
+.cert .name{font-family:'Playfair Display',serif!important;font-weight:600!important;letter-spacing:-.015em!important}
+.cert .ctop,.cert .presented,.cert .dateLine,.cert .meta{font-family:'DM Sans',sans-serif!important;letter-spacing:.14em}
+.cert.theme-navy{background:radial-gradient(circle at 85% 15%,rgba(54,91,132,.16),transparent 30%),linear-gradient(135deg,#fbfaf5 0%,#edf3f8 48%,#e8eef5 100%)!important;border-color:#b9a878!important}
+.cert.theme-pearl{background:radial-gradient(circle at 15% 20%,rgba(126,145,166,.13),transparent 28%),linear-gradient(135deg,#fff 0%,#f4f6f8 50%,#e9eef2 100%)!important;border-color:#b9a878!important}
+.cert.theme-emerald{background:radial-gradient(circle at 80% 18%,rgba(55,126,104,.15),transparent 30%),linear-gradient(135deg,#fbfdfb 0%,#eef7f2 52%,#e2f0e9 100%)!important;border-color:#b9a878!important}
+.cert.theme-royal{background:radial-gradient(circle at 82% 18%,rgba(92,70,145,.16),transparent 30%),linear-gradient(135deg,#fcfbff 0%,#f0edf8 52%,#e6e0f3 100%)!important;border-color:#b9a878!important}
+.thumb-royal{background:linear-gradient(135deg,#f5f1fb,#dcd2ee);color:#4d3d72}
+.cert.theme-navy:before,.cert.theme-pearl:before,.cert.theme-emerald:before,.cert.theme-royal:before{border-color:rgba(117,99,61,.28)!important}
+@media(max-width:700px){.cert{padding:28px 30px!important}.cert h3{font-size:24px!important}.cert .name{font-size:24px!important}}
+
 
 .generate-actions{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
 .cert{background:linear-gradient(135deg,#fffdf8 0%,#f7f0df 52%,#fffaf0 100%);border:8px solid #b99855;border-radius:16px;box-shadow:0 20px 55px rgba(0,0,0,.32),inset 0 0 0 2px rgba(255,255,255,.8);}
@@ -71,8 +86,8 @@
   <div class="generate-layout">
     <section class="card studio-card">
       <div class="studio-head"><div><div class="eyebrow">LIVE PREVIEW</div><h2>Certificate template</h2></div><span class="live-dot"><i></i> Ready to publish</span></div>
-      <div class="preview-stage"><div class="cert" id="certPreview"><div class="corner c1"></div><div class="corner c2"></div><div class="corner c3"></div><div class="corner c4"></div><div class="seal">CODE<br>VIDYA<br>2026</div><div class="ctop">CODE VIDYA • OFFICIAL RECOGNITION</div><h3 id="certTitle">Certificate of Participation</h3><div class="rule"></div><div class="presented">This certificate is proudly presented to</div><div class="name" id="certName">Vidyanshu Anand</div><div class="event" id="certEventText">for successfully participating in <b>Code Vidya Hack Day</b> and contributing to the event with enthusiasm and dedication.</div><div class="dateLine" id="certDate">31 August 2026</div><div class="meta">Certificate ID: <b id="certId">CVH26-DEMO01</b></div><div class="signature"><b id="issuerName">Code Vidya</b><span>Authorized Signature</span></div><div id="qrcode" class="qr"></div></div></div>
-      <div class="preview-footer"><span>Preview updates instantly</span><span>•</span><span>Print-ready A4 landscape</span></div><div class="template-gallery"><div class="template-gallery-head"><h3>Certificate templates</h3><span id="templateLabel">Modern Gold • selected</span></div><div class="template-grid" role="listbox" aria-label="Certificate templates"><button class="template-option active" type="button" data-template="gold" aria-selected="true"><div class="template-thumb thumb-gold"><span>CLASSIC GOLD</span></div><span class="template-name">Modern Gold</span><span class="template-meta">Elegant • formal</span></button><button class="template-option" type="button" data-template="navy" aria-selected="false"><div class="template-thumb thumb-navy"><span>EXECUTIVE</span></div><span class="template-name">Executive Navy</span><span class="template-meta">Bold • premium</span></button><button class="template-option" type="button" data-template="pearl" aria-selected="false"><div class="template-thumb thumb-pearl"><span>PEARL MINIMAL</span></div><span class="template-name">Pearl Minimal</span><span class="template-meta">Clean • modern</span></button><button class="template-option" type="button" data-template="emerald" aria-selected="false"><div class="template-thumb thumb-emerald"><span>EMERALD HONORS</span></div><span class="template-name">Emerald Honors</span><span class="template-meta">Fresh • distinctive</span></button></div></div>
+      <div class="preview-stage"><div class="cert" id="certPreview"><div class="seal">CODE<br>VIDYA<br>2026</div><div class="ctop">CODE VIDYA • OFFICIAL RECOGNITION</div><h3 id="certTitle">Certificate of Participation</h3><div class="rule"></div><div class="presented">This certificate is proudly presented to</div><div class="name" id="certName">Vidyanshu Anand</div><div class="event" id="certEventText">for successfully participating in <b>Code Vidya Hack Day</b> and contributing to the event with enthusiasm and dedication.</div><div class="dateLine" id="certDate">31 August 2026</div><div class="meta">Certificate ID: <b id="certId">CVH26-DEMO01</b></div><div class="signature"><b id="issuerName">Code Vidya</b><span>Authorized Signature</span></div><div id="qrcode" class="qr"></div></div></div>
+      <div class="preview-footer"><span>Preview updates instantly</span><span>•</span><span>Print-ready A4 landscape</span></div><div class="template-gallery"><div class="template-gallery-head"><h3>Certificate templates</h3><span id="templateLabel">Modern Gold • selected</span></div><div class="template-grid" role="listbox" aria-label="Certificate templates"><button class="template-option active" type="button" data-template="gold" aria-selected="true"><div class="template-thumb thumb-gold"><span>CLASSIC GOLD</span></div><span class="template-name">Modern Gold</span><span class="template-meta">Elegant • formal</span></button><button class="template-option" type="button" data-template="navy" aria-selected="false"><div class="template-thumb thumb-navy"><span>EXECUTIVE</span></div><span class="template-name">Executive Navy</span><span class="template-meta">Bold • premium</span></button><button class="template-option" type="button" data-template="pearl" aria-selected="false"><div class="template-thumb thumb-pearl"><span>PEARL MINIMAL</span></div><span class="template-name">Pearl Minimal</span><span class="template-meta">Clean • modern</span></button><button class="template-option" type="button" data-template="emerald" aria-selected="false"><div class="template-thumb thumb-emerald"><span>EMERALD HONORS</span></div><span class="template-name">Emerald Honors</span><span class="template-meta">Fresh • distinctive</span></button><button class="template-option" type="button" data-template="royal" aria-selected="false"><div class="template-thumb thumb-royal"><span>ROYAL IVORY</span></div><span class="template-name">Royal Ivory</span><span class="template-meta">Refined • ceremonial</span></button></div></div>
     </section>
     <aside class="card controls-card">
       <div class="studio-head"><div><div class="eyebrow">CONFIGURATION</div><h2>Generation controls</h2></div><div class="control-icon">✦</div></div>
@@ -110,8 +125,8 @@ function verifyCertificate(){const id=document.getElementById('verifyInput').val
 function applyTemplate(name){
  state.template=name;
  const cert=document.getElementById('certPreview');
- cert.classList.remove('theme-navy','theme-pearl','theme-emerald');
- const labels={gold:'Modern Gold',navy:'Executive Navy',pearl:'Pearl Minimal',emerald:'Emerald Honors'};
+ cert.classList.remove('theme-navy','theme-pearl','theme-emerald','theme-royal');
+ const labels={gold:'Modern Gold',navy:'Executive Navy',pearl:'Pearl Minimal',emerald:'Emerald Honors',royal:'Royal Ivory'};
  if(name!=='gold') cert.classList.add('theme-'+name);
  document.querySelectorAll('.template-option').forEach(b=>{const active=b.dataset.template===name;b.classList.toggle('active',active);b.setAttribute('aria-selected',active?'true':'false')});
  const lab=document.getElementById('templateLabel'); if(lab) lab.textContent=(labels[name]||labels.gold)+' • selected';
