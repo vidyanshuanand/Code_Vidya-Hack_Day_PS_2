@@ -155,4 +155,129 @@ function resetCertificatePreview(){applyTemplate('gold');document.getElementById
 function openEvent(){document.getElementById('modal').classList.add('show')}function closeEvent(){document.getElementById('modal').classList.remove('show')}function saveEvent(){state.event=document.getElementById('eventName').value||'New Event';const d=document.getElementById('dashEventName');if(d)d.textContent=state.event;closeEvent();toast('Event created: '+state.event)}
 function esc(x){return String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 loadDemo();showCertificate({name:'Vidyanshu Anand',email:'vidyanshu@example.com'});initTemplates();['prefix','certType','eventInput','issueDate','issuerInput','verifyUrl','qrToggle'].forEach(id=>{const e=document.getElementById(id);if(e)e.addEventListener(e.type==='checkbox'?'change':'input',syncCertificateSettings)});syncCertificateSettings();updateMetrics();
-</script></body></html>
+</script>
+<style id="cf-extra-templates">
+.cf-template-gallery{margin:22px 0;padding:20px;border:1px solid rgba(255,255,255,.12);border-radius:18px;background:rgba(255,255,255,.035)}
+.cf-template-gallery h3{margin:0 0 6px;font-size:18px}.cf-template-gallery p{margin:0 0 16px;opacity:.65;font-size:13px}
+.cf-template-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.cf-template-card{cursor:pointer;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:14px;min-height:120px;transition:.2s;position:relative;overflow:hidden}
+.cf-template-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.3)}
+.cf-template-card.active{outline:2px solid #9b7cff}
+.cf-template-swatch{height:62px;border-radius:10px;margin-bottom:10px;border:1px solid rgba(0,0,0,.12)}
+.cf-template-name{font-weight:700;font-size:13px}.cf-template-font{font-size:11px;opacity:.6;margin-top:3px}
+@media(max-width:900px){.cf-template-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.cf-template-grid{grid-template-columns:1fr}}
+</style>
+<section class="cf-template-gallery" aria-label="Additional certificate templates">
+  <h3>More certificate templates</h3>
+  <p>Choose a design for the live certificate preview.</p>
+  <div class="cf-template-grid">
+    <button class="cf-template-card" data-template="aurora" type="button">
+      <div class="cf-template-swatch" style="background:linear-gradient(135deg,#f4fff9,#d8f4e7 55%,#b7dfd0)"></div>
+      <div class="cf-template-name">Aurora Mint</div><div class="cf-template-font">Cormorant Garamond</div>
+    </button>
+    <button class="cf-template-card" data-template="royal" type="button">
+      <div class="cf-template-swatch" style="background:linear-gradient(135deg,#f9f4e8,#e7d7a5 52%,#c5a45b)"></div>
+      <div class="cf-template-name">Royal Heritage</div><div class="cf-template-font">Libre Baskerville</div>
+    </button>
+    <button class="cf-template-card" data-template="sapphire" type="button">
+      <div class="cf-template-swatch" style="background:linear-gradient(135deg,#f5f8ff,#d9e4ff 55%,#b8c9ee)"></div>
+      <div class="cf-template-name">Sapphire Classic</div><div class="cf-template-font">DM Serif Display</div>
+    </button>
+    <button class="cf-template-card" data-template="rose" type="button">
+      <div class="cf-template-swatch" style="background:linear-gradient(135deg,#fff7f8,#f6dfe5 55%,#e9bcc8)"></div>
+      <div class="cf-template-name">Rose Signature</div><div class="cf-template-font">Playfair Display</div>
+    </button>
+    <button class="cf-template-card" data-template="midnight" type="button">
+      <div class="cf-template-swatch" style="background:linear-gradient(135deg,#18202e,#263854 55%,#0c111b)"></div>
+      <div class="cf-template-name">Midnight Luxe</div><div class="cf-template-font">Manrope</div>
+    </button>
+    <button class="cf-template-card" data-template="linen" type="button">
+      <div class="cf-template-swatch" style="background:linear-gradient(135deg,#faf7ef,#eee7d8 55%,#ded1b9)"></div>
+      <div class="cf-template-name">Linen Editorial</div><div class="cf-template-font">Georgia</div>
+    </button>
+  </div>
+</section>
+<script>
+(function(){
+  const styles = {
+    aurora:{bg:'linear-gradient(135deg,#f4fff9,#d8f4e7 55%,#b7dfd0)',fg:'#173a32',accent:'#3d8f78',font:'Cormorant Garamond'},
+    royal:{bg:'linear-gradient(135deg,#f9f4e8,#e7d7a5 52%,#c5a45b)',fg:'#382b13',accent:'#a17b2f',font:'Libre Baskerville'},
+    sapphire:{bg:'linear-gradient(135deg,#f5f8ff,#d9e4ff 55%,#b8c9ee)',fg:'#17284a',accent:'#466eb5',font:'DM Serif Display'},
+    rose:{bg:'linear-gradient(135deg,#fff7f8,#f6dfe5 55%,#e9bcc8)',fg:'#4a2730',accent:'#b25f76',font:'Playfair Display'},
+    midnight:{bg:'linear-gradient(135deg,#18202e,#263854 55%,#0c111b)',fg:'#f6f1e6',accent:'#d6b46a',font:'Manrope'},
+    linen:{bg:'linear-gradient(135deg,#faf7ef,#eee7d8 55%,#ded1b9)',fg:'#3a3328',accent:'#8b7657',font:'Georgia'}
+  };
+  function applyTemplate(k){
+    const s=styles[k]; if(!s)return;
+    // Target likely certificate preview containers without altering the rest of the app.
+    const candidates=[...document.querySelectorAll('[class*="certificate"],[id*="certificate"]')];
+    const preview=candidates.find(e => e.offsetWidth>250 && e.offsetHeight>140) || candidates[0];
+    if(preview){
+      preview.style.background=s.bg;
+      preview.style.color=s.fg;
+      preview.style.fontFamily=s.font+', Georgia, serif';
+      preview.style.setProperty('--certificate-accent',s.accent);
+      preview.querySelectorAll('*').forEach(el=>{
+        if(el.dataset.cfKeepColor) return;
+        const t=(el.textContent||'').trim();
+        if(t) el.style.fontFamily=s.font+', Georgia, serif';
+      });
+    }
+    document.querySelectorAll('.cf-template-card').forEach(c=>c.classList.toggle('active',c.dataset.template===k));
+    try{localStorage.setItem('certiflowTemplate',k)}catch(e){}
+  }
+  document.addEventListener('click',e=>{
+    const card=e.target.closest('.cf-template-card');
+    if(card) applyTemplate(card.dataset.template);
+  });
+  try{
+    const saved=localStorage.getItem('certiflowTemplate');
+    if(saved) setTimeout(()=>applyTemplate(saved),150);
+  }catch(e){}
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const go = (key) => {
+    const candidates = {
+      participants: ['Participants','participants','Upload data'],
+      generate: ['Generate','generate','Generate certificates']
+    };
+    const wanted = candidates[key] || [];
+    const els = [...document.querySelectorAll('a,button,[role="button"]')];
+    const target = els.find(el => wanted.some(t => (el.textContent || '').trim().toLowerCase().includes(t.toLowerCase())));
+    if (target && !target.dataset.cfBound) {
+      // If it is the button itself, click once; navigation fallback handles SPA-like UIs.
+      target.dataset.cfBound = '1';
+      target.click();
+      return true;
+    }
+    return false;
+  };
+
+  // Dashboard hero actions: make them reliably usable.
+  [...document.querySelectorAll('button,a,[role="button"]')].forEach(el => {
+    const text = (el.textContent || '').trim().toLowerCase();
+    if (text === 'upload data' || text.includes('upload data')) {
+      el.addEventListener('click', () => {
+        setTimeout(() => {
+          const input = document.querySelector('input[type="file"]');
+          if (input) input.click();
+        }, 50);
+      }, {capture:true});
+    }
+    if (text === 'generate certificates' || text.includes('generate certificates')) {
+      el.addEventListener('click', () => {
+        setTimeout(() => {
+          const target = [...document.querySelectorAll('a,button,[role="button"]')]
+            .find(x => (x.textContent || '').trim().toLowerCase() === 'generate');
+          if (target) target.click();
+        }, 50);
+      }, {capture:true});
+    }
+  });
+});
+</script>
+</body></html>
