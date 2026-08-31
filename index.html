@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>CertiFlow AI — Certificate Intelligence Platform</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Playfair+Display:wght@500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Playfair+Display:wght@500;600;700&family=Libre+Baskerville:wght@400;700&family=Cormorant+Garamond:wght@500;600;700&family=DM+Serif+Display&family=Cinzel:wght@500;600;700&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 :root{--bg:#070a12;--panel:#0e1320;--panel2:#111827;--line:#20293a;--text:#eef2ff;--muted:#8c97ab;--accent:#7c5cff;--accent2:#20d6a0;--danger:#ff647c;--warn:#f4b740;--shadow:0 24px 70px rgba(0,0,0,.35)}
@@ -18,6 +18,20 @@
 .cert.theme-pearl{background:linear-gradient(145deg,#ffffff,#edf2f7);border-color:#8da0b6;color:#25364a}.cert.theme-pearl:before{border-color:#a9b8c8;box-shadow:inset 0 0 0 7px rgba(141,160,182,.07)}.cert.theme-pearl:after{color:#61758c}.cert.theme-pearl .ctop{color:#536b82}.cert.theme-pearl .rule{background:#7c91a8}.cert.theme-pearl .name{color:#344f6b}.cert.theme-pearl .seal{border-color:#71879e;color:#4e6479}.cert.theme-pearl .signature{color:#3b536d}
 .cert.theme-emerald{background:linear-gradient(145deg,#fbfffd,#e4f2eb);border-color:#4d8b76;color:#173b31}.cert.theme-emerald:before{border-color:#72a995;box-shadow:inset 0 0 0 7px rgba(77,139,118,.08)}.cert.theme-emerald:after{color:#4d8b76}.cert.theme-emerald .ctop{color:#376f5e}.cert.theme-emerald .rule{background:#4d8b76}.cert.theme-emerald .name{color:#23624f}.cert.theme-emerald .seal{border-color:#4d8b76;color:#356e5c}.cert.theme-emerald .signature{color:#2f6a58}
 .cert.theme-navy .qr,.cert.theme-pearl .qr,.cert.theme-emerald .qr{border-color:#b7c3cf}
+
+/* Additional rich certificate themes + typography */
+.thumb-aurora{background:linear-gradient(135deg,#f2fff8,#cfeee0);color:#245747}.thumb-sapphire{background:linear-gradient(135deg,#f4f7ff,#cbd9f4);color:#274777}.thumb-rose{background:linear-gradient(135deg,#fff7fa,#f0cbd7);color:#743c4f}.thumb-midnight{background:linear-gradient(135deg,#111827,#293b5d);color:#f5d58d}.thumb-linen{background:linear-gradient(135deg,#fbf6ea,#e8dcc7);color:#5b4b38}.thumb-prestige{background:linear-gradient(135deg,#171a22,#343b49);color:#f1d58a}
+.cert.theme-aurora{background:linear-gradient(135deg,#fbfffd,#e4f6ed 55%,#d1ebdf)!important;border-color:#78a994!important;color:#21473c}.cert.theme-aurora:before{border-color:#8ab8a4!important}.cert.theme-aurora:after,.cert.theme-aurora .ctop{color:#397763}.cert.theme-aurora .rule{background:#5a9c82}.cert.theme-aurora .name,.cert.theme-aurora .signature{color:#2f6957}
+.cert.theme-sapphire{background:linear-gradient(135deg,#fbfcff,#e7edfa 52%,#d6e1f5)!important;border-color:#8198c1!important;color:#233653}.cert.theme-sapphire:before{border-color:#9badc9!important}.cert.theme-sapphire:after,.cert.theme-sapphire .ctop{color:#486795}.cert.theme-sapphire .rule{background:#5f7fab}.cert.theme-sapphire .name,.cert.theme-sapphire .signature{color:#345b8e}
+.cert.theme-rose{background:linear-gradient(135deg,#fffafb,#f8e4ea 52%,#efd1db)!important;border-color:#c48b9c!important;color:#4d2b36}.cert.theme-rose:before{border-color:#d0a0af!important}.cert.theme-rose:after,.cert.theme-rose .ctop{color:#9b536b}.cert.theme-rose .rule{background:#b96d86}.cert.theme-rose .name,.cert.theme-rose .signature{color:#8b435c}
+.cert.theme-midnight{background:radial-gradient(circle at 85% 15%,rgba(219,178,91,.16),transparent 28%),linear-gradient(135deg,#1b2435,#293b5b 55%,#111827)!important;border-color:#c7a55e!important;color:#f4eee2}.cert.theme-midnight:before{border-color:rgba(220,190,125,.48)!important}.cert.theme-midnight:after,.cert.theme-midnight .ctop{color:#d8b66a}.cert.theme-midnight .rule{background:#d8b66a}.cert.theme-midnight .name,.cert.theme-midnight .signature{color:#f0d38c}.cert.theme-midnight .presented,.cert.theme-midnight .event,.cert.theme-midnight .dateLine,.cert.theme-midnight .meta{color:#ddd4c5}
+.cert.theme-linen{background:linear-gradient(135deg,#fffdf8,#f1e8d7 55%,#e7dbc8)!important;border-color:#b69a70!important;color:#40372d}.cert.theme-linen:before{border-color:#c4ab86!important}.cert.theme-linen:after,.cert.theme-linen .ctop{color:#7d6546}.cert.theme-linen .rule{background:#a5865b}.cert.theme-linen .name,.cert.theme-linen .signature{color:#6f5535}
+.cert.theme-prestige{background:linear-gradient(135deg,#20242d,#303846 55%,#171a21)!important;border-color:#c8a45b!important;color:#f5f0e6}.cert.theme-prestige:before{border-color:rgba(215,184,108,.5)!important}.cert.theme-prestige:after,.cert.theme-prestige .ctop{color:#d7b66a}.cert.theme-prestige .rule{background:#d7b66a}.cert.theme-prestige .name,.cert.theme-prestige .signature{color:#e8c978}.cert.theme-prestige .presented,.cert.theme-prestige .event,.cert.theme-prestige .dateLine,.cert.theme-prestige .meta{color:#ded7c9}
+.cert.theme-aurora h3,.cert.theme-aurora .name{font-family:'Cormorant Garamond',serif!important}.cert.theme-sapphire h3,.cert.theme-sapphire .name{font-family:'DM Serif Display',serif!important}.cert.theme-rose h3,.cert.theme-rose .name{font-family:'Playfair Display',serif!important}.cert.theme-midnight h3,.cert.theme-midnight .name{font-family:'Montserrat',sans-serif!important}.cert.theme-linen h3,.cert.theme-linen .name{font-family:'Libre Baskerville',serif!important}.cert.theme-prestige h3,.cert.theme-prestige .name{font-family:'Cinzel',serif!important}
+.cert.theme-aurora .ctop,.cert.theme-sapphire .ctop,.cert.theme-rose .ctop,.cert.theme-midnight .ctop,.cert.theme-linen .ctop,.cert.theme-prestige .ctop{font-family:'Montserrat',sans-serif!important}
+@media(max-width:900px){.template-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){.template-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 @media(max-width:700px){.template-grid{grid-template-columns:repeat(2,1fr)}}
 /* Premium certificate redesign v5: no corner ornaments, typography + background driven themes */
 .cert{border:1px solid #c8b98f!important;border-radius:10px!important;padding:38px 48px!important;box-shadow:0 20px 55px rgba(0,0,0,.24), inset 0 0 0 6px rgba(255,255,255,.28);font-family:'DM Sans',sans-serif}
@@ -75,7 +89,7 @@ html,body{max-width:100%;overflow-x:hidden}
 .cert{max-width:100%}
 
 /* Template gallery */
-.cf-template-gallery{width:100%;max-width:100%;overflow:hidden}
+
 .cf-template-grid{width:100%;grid-template-columns:repeat(4,minmax(0,1fr));}
 .cf-template-card{min-width:0;width:100%}
 
@@ -124,7 +138,7 @@ html,body{max-width:100%;overflow-x:hidden}
     <section class="card studio-card">
       <div class="studio-head"><div><div class="eyebrow">LIVE PREVIEW</div><h2>Certificate template</h2></div><span class="live-dot"><i></i> Ready to publish</span></div>
       <div class="preview-stage"><div class="cert" id="certPreview"><div class="seal">CODE<br>VIDYA<br>2026</div><div class="ctop">CODE VIDYA • OFFICIAL RECOGNITION</div><h3 id="certTitle">Certificate of Participation</h3><div class="rule"></div><div class="presented">This certificate is proudly presented to</div><div class="name" id="certName">Vidyanshu Anand</div><div class="event" id="certEventText">for successfully participating in <b>Code Vidya Hack Day</b> and contributing to the event with enthusiasm and dedication.</div><div class="dateLine" id="certDate">31 August 2026</div><div class="meta">Certificate ID: <b id="certId">CVH26-DEMO01</b></div><div class="signature"><b id="issuerName">Code Vidya</b><span>Authorized Signature</span></div><div id="qrcode" class="qr"></div></div></div>
-      <div class="preview-footer"><span>Preview updates instantly</span><span>•</span><span>Print-ready A4 landscape</span></div><div class="template-gallery"><div class="template-gallery-head"><h3>Certificate templates</h3><span id="templateLabel">Modern Gold • selected</span></div><div class="template-grid" role="listbox" aria-label="Certificate templates"><button class="template-option active" type="button" data-template="gold" aria-selected="true"><div class="template-thumb thumb-gold"><span>CLASSIC GOLD</span></div><span class="template-name">Modern Gold</span><span class="template-meta">Elegant • formal</span></button><button class="template-option" type="button" data-template="navy" aria-selected="false"><div class="template-thumb thumb-navy"><span>EXECUTIVE</span></div><span class="template-name">Executive Navy</span><span class="template-meta">Bold • premium</span></button><button class="template-option" type="button" data-template="pearl" aria-selected="false"><div class="template-thumb thumb-pearl"><span>PEARL MINIMAL</span></div><span class="template-name">Pearl Minimal</span><span class="template-meta">Clean • modern</span></button><button class="template-option" type="button" data-template="emerald" aria-selected="false"><div class="template-thumb thumb-emerald"><span>EMERALD HONORS</span></div><span class="template-name">Emerald Honors</span><span class="template-meta">Fresh • distinctive</span></button><button class="template-option" type="button" data-template="royal" aria-selected="false"><div class="template-thumb thumb-royal"><span>ROYAL IVORY</span></div><span class="template-name">Royal Ivory</span><span class="template-meta">Refined • ceremonial</span></button></div></div>
+      <div class="preview-footer"><span>Preview updates instantly</span><span>•</span><span>Print-ready A4 landscape</span></div><div class="template-gallery"><div class="template-gallery-head"><h3>Certificate templates</h3><span id="templateLabel">Modern Gold • selected</span></div><div class="template-grid" role="listbox" aria-label="Certificate templates"><button class="template-option active" type="button" data-template="gold" aria-selected="true"><div class="template-thumb thumb-gold"><span>CLASSIC GOLD</span></div><span class="template-name">Modern Gold</span><span class="template-meta">Elegant • formal</span></button><button class="template-option" type="button" data-template="navy" aria-selected="false"><div class="template-thumb thumb-navy"><span>EXECUTIVE</span></div><span class="template-name">Executive Navy</span><span class="template-meta">Bold • premium</span></button><button class="template-option" type="button" data-template="pearl" aria-selected="false"><div class="template-thumb thumb-pearl"><span>PEARL MINIMAL</span></div><span class="template-name">Pearl Minimal</span><span class="template-meta">Clean • modern</span></button><button class="template-option" type="button" data-template="emerald" aria-selected="false"><div class="template-thumb thumb-emerald"><span>EMERALD HONORS</span></div><span class="template-name">Emerald Honors</span><span class="template-meta">Fresh • distinctive</span></button><button class="template-option" type="button" data-template="royal" aria-selected="false"><div class="template-thumb thumb-royal"><span>ROYAL IVORY</span></div><span class="template-name">Royal Ivory</span><span class="template-meta">Refined • ceremonial</span></button><button class="template-option" type="button" data-template="aurora" aria-selected="false"><div class="template-thumb thumb-aurora"><span>AURORA MINT</span></div><span class="template-name">Aurora Mint</span><span class="template-meta">Fresh • graceful</span></button><button class="template-option" type="button" data-template="sapphire" aria-selected="false"><div class="template-thumb thumb-sapphire"><span>SAPPHIRE CLASSIC</span></div><span class="template-name">Sapphire Classic</span><span class="template-meta">Academic • refined</span></button><button class="template-option" type="button" data-template="rose" aria-selected="false"><div class="template-thumb thumb-rose"><span>ROSE SIGNATURE</span></div><span class="template-name">Rose Signature</span><span class="template-meta">Elegant • warm</span></button><button class="template-option" type="button" data-template="midnight" aria-selected="false"><div class="template-thumb thumb-midnight"><span>MIDNIGHT LUXE</span></div><span class="template-name">Midnight Luxe</span><span class="template-meta">Premium • modern</span></button><button class="template-option" type="button" data-template="linen" aria-selected="false"><div class="template-thumb thumb-linen"><span>LINEN EDITORIAL</span></div><span class="template-name">Linen Editorial</span><span class="template-meta">Editorial • classic</span></button><button class="template-option" type="button" data-template="prestige" aria-selected="false"><div class="template-thumb thumb-prestige"><span>PRESTIGE</span></div><span class="template-name">Prestige Black</span><span class="template-meta">Formal • executive</span></button></div></div>
     </section>
     <aside class="card controls-card">
       <div class="studio-head"><div><div class="eyebrow">CONFIGURATION</div><h2>Generation controls</h2></div><div class="control-icon">✦</div></div>
@@ -162,8 +176,8 @@ function verifyCertificate(){const id=document.getElementById('verifyInput').val
 function applyTemplate(name){
  state.template=name;
  const cert=document.getElementById('certPreview');
- cert.classList.remove('theme-navy','theme-pearl','theme-emerald','theme-royal');
- const labels={gold:'Modern Gold',navy:'Executive Navy',pearl:'Pearl Minimal',emerald:'Emerald Honors',royal:'Royal Ivory'};
+ cert.classList.remove('theme-navy','theme-pearl','theme-emerald','theme-royal','theme-aurora','theme-sapphire','theme-rose','theme-midnight','theme-linen','theme-prestige');
+ const labels={gold:'Modern Gold',navy:'Executive Navy',pearl:'Pearl Minimal',emerald:'Emerald Honors',royal:'Royal Ivory',aurora:'Aurora Mint',sapphire:'Sapphire Classic',rose:'Rose Signature',midnight:'Midnight Luxe',linen:'Linen Editorial',prestige:'Prestige Black'};
  if(name!=='gold') cert.classList.add('theme-'+name);
  document.querySelectorAll('.template-option').forEach(b=>{const active=b.dataset.template===name;b.classList.toggle('active',active);b.setAttribute('aria-selected',active?'true':'false')});
  const lab=document.getElementById('templateLabel'); if(lab) lab.textContent=(labels[name]||labels.gold)+' • selected';
@@ -193,128 +207,5 @@ function openEvent(){document.getElementById('modal').classList.add('show')}func
 function esc(x){return String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 loadDemo();showCertificate({name:'Vidyanshu Anand',email:'vidyanshu@example.com'});initTemplates();['prefix','certType','eventInput','issueDate','issuerInput','verifyUrl','qrToggle'].forEach(id=>{const e=document.getElementById(id);if(e)e.addEventListener(e.type==='checkbox'?'change':'input',syncCertificateSettings)});syncCertificateSettings();updateMetrics();
 </script>
-<style id="cf-extra-templates">
-.cf-template-gallery{margin:22px 0;padding:20px;border:1px solid rgba(255,255,255,.12);border-radius:18px;background:rgba(255,255,255,.035)}
-.cf-template-gallery h3{margin:0 0 6px;font-size:18px}.cf-template-gallery p{margin:0 0 16px;opacity:.65;font-size:13px}
-.cf-template-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.cf-template-card{cursor:pointer;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:14px;min-height:120px;transition:.2s;position:relative;overflow:hidden}
-.cf-template-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.3)}
-.cf-template-card.active{outline:2px solid #9b7cff}
-.cf-template-swatch{height:62px;border-radius:10px;margin-bottom:10px;border:1px solid rgba(0,0,0,.12)}
-.cf-template-name{font-weight:700;font-size:13px}.cf-template-font{font-size:11px;opacity:.6;margin-top:3px}
-@media(max-width:900px){.cf-template-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:520px){.cf-template-grid{grid-template-columns:1fr}}
-</style>
-<section class="cf-template-gallery" aria-label="Additional certificate templates">
-  <h3>More certificate templates</h3>
-  <p>Choose a design for the live certificate preview.</p>
-  <div class="cf-template-grid">
-    <button class="cf-template-card" data-template="aurora" type="button">
-      <div class="cf-template-swatch" style="background:linear-gradient(135deg,#f4fff9,#d8f4e7 55%,#b7dfd0)"></div>
-      <div class="cf-template-name">Aurora Mint</div><div class="cf-template-font">Cormorant Garamond</div>
-    </button>
-    <button class="cf-template-card" data-template="royal" type="button">
-      <div class="cf-template-swatch" style="background:linear-gradient(135deg,#f9f4e8,#e7d7a5 52%,#c5a45b)"></div>
-      <div class="cf-template-name">Royal Heritage</div><div class="cf-template-font">Libre Baskerville</div>
-    </button>
-    <button class="cf-template-card" data-template="sapphire" type="button">
-      <div class="cf-template-swatch" style="background:linear-gradient(135deg,#f5f8ff,#d9e4ff 55%,#b8c9ee)"></div>
-      <div class="cf-template-name">Sapphire Classic</div><div class="cf-template-font">DM Serif Display</div>
-    </button>
-    <button class="cf-template-card" data-template="rose" type="button">
-      <div class="cf-template-swatch" style="background:linear-gradient(135deg,#fff7f8,#f6dfe5 55%,#e9bcc8)"></div>
-      <div class="cf-template-name">Rose Signature</div><div class="cf-template-font">Playfair Display</div>
-    </button>
-    <button class="cf-template-card" data-template="midnight" type="button">
-      <div class="cf-template-swatch" style="background:linear-gradient(135deg,#18202e,#263854 55%,#0c111b)"></div>
-      <div class="cf-template-name">Midnight Luxe</div><div class="cf-template-font">Manrope</div>
-    </button>
-    <button class="cf-template-card" data-template="linen" type="button">
-      <div class="cf-template-swatch" style="background:linear-gradient(135deg,#faf7ef,#eee7d8 55%,#ded1b9)"></div>
-      <div class="cf-template-name">Linen Editorial</div><div class="cf-template-font">Georgia</div>
-    </button>
-  </div>
-</section>
-<script>
-(function(){
-  const styles = {
-    aurora:{bg:'linear-gradient(135deg,#f4fff9,#d8f4e7 55%,#b7dfd0)',fg:'#173a32',accent:'#3d8f78',font:'Cormorant Garamond'},
-    royal:{bg:'linear-gradient(135deg,#f9f4e8,#e7d7a5 52%,#c5a45b)',fg:'#382b13',accent:'#a17b2f',font:'Libre Baskerville'},
-    sapphire:{bg:'linear-gradient(135deg,#f5f8ff,#d9e4ff 55%,#b8c9ee)',fg:'#17284a',accent:'#466eb5',font:'DM Serif Display'},
-    rose:{bg:'linear-gradient(135deg,#fff7f8,#f6dfe5 55%,#e9bcc8)',fg:'#4a2730',accent:'#b25f76',font:'Playfair Display'},
-    midnight:{bg:'linear-gradient(135deg,#18202e,#263854 55%,#0c111b)',fg:'#f6f1e6',accent:'#d6b46a',font:'Manrope'},
-    linen:{bg:'linear-gradient(135deg,#faf7ef,#eee7d8 55%,#ded1b9)',fg:'#3a3328',accent:'#8b7657',font:'Georgia'}
-  };
-  function applyTemplate(k){
-    const s=styles[k]; if(!s)return;
-    // Target likely certificate preview containers without altering the rest of the app.
-    const candidates=[...document.querySelectorAll('[class*="certificate"],[id*="certificate"]')];
-    const preview=candidates.find(e => e.offsetWidth>250 && e.offsetHeight>140) || candidates[0];
-    if(preview){
-      preview.style.background=s.bg;
-      preview.style.color=s.fg;
-      preview.style.fontFamily=s.font+', Georgia, serif';
-      preview.style.setProperty('--certificate-accent',s.accent);
-      preview.querySelectorAll('*').forEach(el=>{
-        if(el.dataset.cfKeepColor) return;
-        const t=(el.textContent||'').trim();
-        if(t) el.style.fontFamily=s.font+', Georgia, serif';
-      });
-    }
-    document.querySelectorAll('.cf-template-card').forEach(c=>c.classList.toggle('active',c.dataset.template===k));
-    try{localStorage.setItem('certiflowTemplate',k)}catch(e){}
-  }
-  document.addEventListener('click',e=>{
-    const card=e.target.closest('.cf-template-card');
-    if(card) applyTemplate(card.dataset.template);
-  });
-  try{
-    const saved=localStorage.getItem('certiflowTemplate');
-    if(saved) setTimeout(()=>applyTemplate(saved),150);
-  }catch(e){}
-})();
-</script>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const go = (key) => {
-    const candidates = {
-      participants: ['Participants','participants','Upload data'],
-      generate: ['Generate','generate','Generate certificates']
-    };
-    const wanted = candidates[key] || [];
-    const els = [...document.querySelectorAll('a,button,[role="button"]')];
-    const target = els.find(el => wanted.some(t => (el.textContent || '').trim().toLowerCase().includes(t.toLowerCase())));
-    if (target && !target.dataset.cfBound) {
-      // If it is the button itself, click once; navigation fallback handles SPA-like UIs.
-      target.dataset.cfBound = '1';
-      target.click();
-      return true;
-    }
-    return false;
-  };
-
-  // Dashboard hero actions: make them reliably usable.
-  [...document.querySelectorAll('button,a,[role="button"]')].forEach(el => {
-    const text = (el.textContent || '').trim().toLowerCase();
-    if (text === 'upload data' || text.includes('upload data')) {
-      el.addEventListener('click', () => {
-        setTimeout(() => {
-          const input = document.querySelector('input[type="file"]');
-          if (input) input.click();
-        }, 50);
-      }, {capture:true});
-    }
-    if (text === 'generate certificates' || text.includes('generate certificates')) {
-      el.addEventListener('click', () => {
-        setTimeout(() => {
-          const target = [...document.querySelectorAll('a,button,[role="button"]')]
-            .find(x => (x.textContent || '').trim().toLowerCase() === 'generate');
-          if (target) target.click();
-        }, 50);
-      }, {capture:true});
-    }
-  });
-});
-</script>
 </body></html>
