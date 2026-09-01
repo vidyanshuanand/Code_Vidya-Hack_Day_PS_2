@@ -83,3 +83,9 @@ The certificate generator uses a responsive layout with a persistent Save as PDF
 
 ## Certificate template gallery
 The Generate workspace includes four selectable templates: Modern Gold, Executive Navy, Pearl Minimal, and Emerald Honors. Each template is an HTML/CSS theme applied to the live certificate preview and remains print-ready.
+
+
+## Gemini AI-assisted validation
+The Participants → Run AI-assisted validation action now calls the Vercel `/api/validate` serverless function.
+Set the Vercel environment variable `GEMINI_API_KEY` before deployment. The key stays server-side and is never shipped to the browser.
+The endpoint uses Gemini 2.5 Flash for participant-data quality review. If the key/API is unavailable, the existing deterministic validation remains as a safe fallback.

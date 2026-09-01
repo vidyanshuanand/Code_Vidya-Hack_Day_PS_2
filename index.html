@@ -295,9 +295,64 @@ function parseCSV(s){const lines=s.trim().split(/\r?\n/).filter(Boolean);const s
 function handleCSV(ev){const f=ev.target.files[0];if(!f)return;if(!f.name.toLowerCase().endsWith('.csv')){toast('Please choose a CSV file');return}const r=new FileReader();r.onload=()=>{state.rows=parseCSV(r.result);renderRows();runValidation();toast(f.name+' uploaded successfully')};r.readAsText(f)}
 const dz=document.getElementById('dropZone');['dragenter','dragover'].forEach(e=>dz.addEventListener(e,x=>{x.preventDefault();dz.classList.add('drag')}));['dragleave','drop'].forEach(e=>dz.addEventListener(e,x=>{x.preventDefault();dz.classList.remove('drag')}));dz.addEventListener('drop',e=>{const f=e.dataTransfer.files[0];if(!f)return;handleCSV({target:{files:[f]}})});
 function validateRows(){const seen={};state.rows.forEach(r=>{r.issue='';const key=r.name.toLowerCase().replace(/\s+/g,' ').trim();if(!r.name)r.issue='Missing name';else if(!r.email)r.issue='Missing email';else if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(r.email))r.issue='Invalid email';if(seen[key])r.issue=r.issue? r.issue+' • Duplicate name':'Duplicate name';seen[key]=true;r.status=r.issue?'review':'valid';});}
-function runValidation(){if(!state.rows.length){toast('Upload or load participant data first');return}validateRows();renderRows();renderReview();updateMetrics();toast('AI-assisted validation complete');}
+async function runValidation(){
+  if(!state.rows.length){toast('Upload or load participant data first');return}
+  validateRows();
+  renderRows();
+  renderReview();
+  updateMetrics();
+  toast('Running Gemini AI-assisted validation…');
+  try{
+    const response=await fetch('/api/validate',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        event:state.event,
+        records:state.rows.map((r,index)=>({
+          index,
+          name:r.name||'',
+          email:r.email||'',
+          role:r.role||'Participant',
+          ruleIssue:r.issue||''
+        }))
+      })
+    });
+    if(!response.ok) throw new Error('Gemini API unavailable');
+    const result=await response.json();
+    if(Array.isArray(result.results)){
+      result.results.forEach(ai=>{
+        const r=state.rows[Number(ai.index)];
+        if(!r)return;
+        const aiIssue=(ai.issue||'').trim();
+        const suggestion=(ai.suggestion||'').trim();
+        if(ai.status==='review'){
+          r.status='review';
+          r.issue=aiIssue || r.issue || 'AI review required';
+          if(suggestion) r.aiSuggestion=suggestion;
+        }else if(ai.status==='valid' && !r.issue){
+          r.status='valid';
+        }
+        if(ai.confidence!=null) r.aiConfidence=ai.confidence;
+      });
+      renderRows();
+      renderReview();
+      updateMetrics();
+      toast('Gemini AI-assisted validation complete');
+    }else{
+      throw new Error('Invalid AI response');
+    }
+  }catch(err){
+    // Keep the deterministic validation as a safe fallback if the Vercel
+    // function/key is not configured yet.
+    renderRows();
+    renderReview();
+    updateMetrics();
+    toast('AI unavailable — rule validation completed');
+    console.warn('Gemini validation:',err);
+  }
+}
 function renderRows(){const b=document.getElementById('dataBody');if(!state.rows.length){b.innerHTML='<tr><td colspan="4" class="muted">No participant data yet.</td></tr>';return}b.innerHTML=state.rows.map(r=>`<tr><td>${esc(r.name)}</td><td>${esc(r.email||'—')}</td><td>${esc(r.role)}</td><td>${r.status==='valid'?'<span class="check">✓ Valid</span>':'<span class="x">⚠ '+esc(r.issue)+'</span>'}</td></tr>`).join('')}
-function renderReview(){const el=document.getElementById('reviewList');const bad=state.rows.filter(r=>r.status==='review');if(!bad.length){el.innerHTML='<div class="card" style="text-align:center;color:#72e0bd">✓ No unresolved issues. All records are ready.</div>';return}el.innerHTML=bad.map((r,i)=>`<div class="reviewrow"><div class="info"><div class="avatar">${(r.name||'?')[0].toUpperCase()}</div><div><b>${esc(r.name||'Unnamed')}</b><div class="muted">${esc(r.email||'No email')} • ${esc(r.role)}</div></div></div><div style="display:flex;align-items:center;gap:10px"><span class="issue">${esc(r.issue)}</span><button class="btn" onclick="fixRow(${state.rows.indexOf(r)})">Fix</button></div></div>`).join('')}
+function renderReview(){const el=document.getElementById('reviewList');const bad=state.rows.filter(r=>r.status==='review');if(!bad.length){el.innerHTML='<div class="card" style="text-align:center;color:#72e0bd">✓ No unresolved issues. All records are ready.</div>';return}el.innerHTML=bad.map((r,i)=>`<div class="reviewrow"><div class="info"><div class="avatar">${(r.name||'?')[0].toUpperCase()}</div><div><b>${esc(r.name||'Unnamed')}</b><div class="muted">${esc(r.email||'No email')} • ${esc(r.role)}</div></div></div><div style="display:flex;align-items:center;gap:10px"><div><span class="issue">${esc(r.issue)}</span>${r.aiSuggestion?`<div class="muted" style="margin-top:5px">Gemini: ${esc(r.aiSuggestion)}</div>`:''}</div><button class="btn" onclick="fixRow(${state.rows.indexOf(r)})">Fix</button></div></div>`).join('')}
 function fixRow(i){const r=state.rows[i];if(r.issue.includes('Missing email'))r.email=(r.name.toLowerCase().replace(/\s+/g,'.')+'@example.com');else if(r.issue.includes('Invalid email'))r.email=r.email.replace(/@.*/,'@example.com');else if(r.issue.includes('Duplicate'))r.name=r.name+' (2)';validateRows();renderRows();renderReview();updateMetrics();toast('Record corrected and revalidated')}
 function approveAll(){state.rows.forEach(r=>{if(r.status==='valid')r.status='approved'});renderReview();updateMetrics();toast('Valid records approved')}
 function updateMetrics(){const total=state.rows.length,valid=state.rows.filter(r=>r.status==='valid'||r.status==='approved').length,rev=state.rows.filter(r=>r.status==='review').length;document.getElementById('mTotal').textContent=total;document.getElementById('mValid').textContent=valid;document.getElementById('mReview').textContent=rev;document.getElementById('mGenerated').textContent=state.generated;document.getElementById('pipeReview').textContent=rev?'⚠ '+rev:'✓';document.getElementById('pipeGen').textContent=state.generated?'✓':'';}
