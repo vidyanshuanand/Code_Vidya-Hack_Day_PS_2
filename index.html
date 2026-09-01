@@ -207,74 +207,71 @@ html,body{max-width:100%;overflow-x:hidden}
 }
 </style>
 
-<style id="cf-certificate-layout-fix">
-/* Normal on-screen certificate: match the polished preview, with no huge empty gap. */
+
+
+<style id="cf-final-certificate-screen-fix">
+/* Certificate preview must itself be the landscape sheet, not a tall container. */
 #certPreview{
-  width:min(100%, 1120px) !important;
-  aspect-ratio:297 / 210 !important;
-  height:auto !important;
-  min-height:0 !important;
-  max-height:none !important;
-  margin:0 auto !important;
-  box-sizing:border-box !important;
   position:relative !important;
+  width:100% !important;
+  max-width:1120px !important;
+  height:auto !important;
+  aspect-ratio:297 / 210 !important;
+  min-height:0 !important;
+  margin:0 auto !important;
   overflow:hidden !important;
+  box-sizing:border-box !important;
+  display:block !important;
+  background:#fff !important;
 }
 
-/* Keep the seal and content positioned inside the certificate. */
-#certPreview .certificate-seal,
-#certPreview .seal,
-#certPreview [class*="seal"]{
-  position:absolute;
+/* Remove accidental vertical positioning from certificate content. */
+#certPreview > *{
+  box-sizing:border-box;
 }
 
-/* Print exactly the certificate, at the same proportions as the screen preview. */
-@media print {
-  @page { size:A4 landscape; margin:0; }
+/* If a wrapper was using viewport-height sizing, constrain it to the sheet. */
+#certPreview [style*="100vh"],
+#certPreview [style*="100vw"]{
+  max-height:100% !important;
+}
 
+/* Keep the certificate text block in the visual center rather than at the top. */
+#certPreview .certificate-content,
+#certPreview .cert-content,
+#certPreview .certificate-body{
+  max-height:100% !important;
+}
+
+/* Final print: one clean A4 landscape sheet. */
+@media print{
+  @page{size:A4 landscape;margin:0}
   html,body{
     width:297mm !important;
     height:210mm !important;
     margin:0 !important;
     padding:0 !important;
-    background:#fff !important;
     overflow:hidden !important;
+    background:#fff !important;
   }
-
-  body *{visibility:hidden !important;}
-
-  #certPreview,
-  #certPreview *{
-    visibility:visible !important;
-  }
-
+  body *{visibility:hidden !important}
+  #certPreview,#certPreview *{visibility:visible !important}
   #certPreview{
-    display:block !important;
     position:absolute !important;
     left:0 !important;
     top:0 !important;
     width:297mm !important;
     height:210mm !important;
     max-width:none !important;
-    max-height:none !important;
+    aspect-ratio:auto !important;
     margin:0 !important;
     padding:0 !important;
-    aspect-ratio:auto !important;
-    box-sizing:border-box !important;
     overflow:hidden !important;
     transform:none !important;
     box-shadow:none !important;
-    opacity:1 !important;
+    background:#fff !important;
     -webkit-print-color-adjust:exact !important;
     print-color-adjust:exact !important;
-  }
-
-  /* Hide all app chrome and template controls. */
-  nav,aside,header,footer,button,input,select,textarea,
-  .cf-bulk-nav,.cf-security-panel,.cf-template-gallery,
-  .template-gallery,.templates,.generation-controls,
-  .print-controls{
-    display:none !important;
   }
 }
 </style>
