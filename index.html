@@ -378,104 +378,39 @@ function syncCertificateSettings(){
  const q=document.getElementById('qrcode');
  if(document.getElementById('qrToggle')?.checked){q.style.display='grid';q.innerHTML='';if(window.QRCode)new QRCode(q,{text:(document.getElementById('verifyUrl').value.trim()||location.href.split('#')[0]+'#verify')+'?id='+document.getElementById('certId').textContent,width:58,height:58});}else{q.innerHTML='';q.style.display='none';}
 }
-function printCert(){syncCertificateSettings();window.print()}
-function resetCertificatePreview(){applyTemplate('gold');document.getElementById('prefix').value='CVH26';document.getElementById('certType').value='Participation';document.getElementById('eventInput').value=state.event;document.getElementById('issuerInput').value='Code Vidya';document.getElementById('verifyUrl').value=location.href.split('#')[0]+'#verify';document.getElementById('qrToggle').checked=true;document.getElementById('certId').textContent='CVH26-DEMO01';syncCertificateSettings();toast('Certificate preview reset')}
-function openEvent(){document.getElementById('modal').classList.add('show')}function closeEvent(){document.getElementById('modal').classList.remove('show')}function saveEvent(){state.event=document.getElementById('eventName').value||'New Event';const d=document.getElementById('dashEventName');if(d)d.textContent=state.event;closeEvent();toast('Event created: '+state.event)}
-function esc(x){return String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-loadDemo();showCertificate({name:'Vidyanshu Anand',email:'vidyanshu@example.com'});initTemplates();['prefix','certType','eventInput','issueDate','issuerInput','verifyUrl','qrToggle'].forEach(id=>{const e=document.getElementById(id);if(e)e.addEventListener(e.type==='checkbox'?'change':'input',syncCertificateSettings)});syncCertificateSettings();updateMetrics();
-</script>
+function printCert(){
+  const cert = document.getElementById('certPreview');
+  if(!cert){ alert('Certificate preview is not ready.'); return; }
 
+  const printWin = window.open('', '_blank', 'noopener,noreferrer,width=1200,height=850');
+  if(!printWin){ window.print(); return; }
 
-<script id="cf-bulk-nav-js">
-(function(){
-  const demo=[
-    {certificate_id:'CERT-001',name:'Aarav Sharma',email:'aarav.sharma@example.com',course:'B.Tech CSE',role:'Participant',event:'Tech Fest 2026'},
-    {certificate_id:'CERT-002',name:'Ananya Singh',email:'ananya.singh@example.com',course:'B.Tech ECE',role:'Participant',event:'Tech Fest 2026'},
-    {certificate_id:'CERT-003',name:'Rohan Verma',email:'rohan.verma@example.com',course:'B.Tech MSME',role:'Participant',event:'Tech Fest 2026'},
-    {certificate_id:'CERT-004',name:'Priya Gupta',email:'priya.gupta@example.com',course:'B.Tech IT',role:'Winner',event:'Tech Fest 2026'},
-    {certificate_id:'CERT-005',name:'Aditya Mishra',email:'aditya.mishra@example.com',course:'B.Tech CSE',role:'Runner-up',event:'Tech Fest 2026'},
-    {certificate_id:'CERT-006',name:'Sneha Yadav',email:'sneha.yadav@example.com',course:'B.Tech ECE',role:'Participant',event:'Tech Fest 2026'},
-    {certificate_id:'CERT-007',name:'Vivek Kumar',email:'vivek.kumar@example.com',course:'B.Tech Mechanical',role:'Participant',event:'Tech Fest 2026'},
-    {certificate_id:'CERT-008',name:'Ishita Jain',email:'ishita.jain@example.com',course:'B.Tech CSE',role:'Winner',event:'Tech Fest 2026'},
-    {certificate_id:'CERT-009',name:'Kunal Tiwari',email:'kunal.tiwari@example.com',course:'B.Tech MSME',role:'Participant',event:'Tech Fest 2026'},
-    {certificate_id:'CERT-010',name:'Neha Patel',email:'neha.patel@example.com',course:'B.Tech IT',role:'Participant',event:'Tech Fest 2026'},
-    {certificate_id:'CERT-011',name:'Rahul Singh',email:'rahul.singh@example.com',course:'B.Tech CSE',role:'Participant',event:'Tech Fest 2026'},
-    {certificate_id:'CERT-012',name:'Meera Joshi',email:'meera.joshi@example.com',course:'B.Tech ECE',role:'Participant',event:'Tech Fest 2026'}
-  ];
-  let people=demo.slice(), index=0, saved=new Set();
+  const styles = [...document.querySelectorAll('style,link[rel="stylesheet"]')]
+    .map(x => x.outerHTML).join('
+');
 
-  function visibleGenerate(){
-    const t=(document.body.innerText||'').toLowerCase();
-    return t.includes('generate') && !t.includes('participants') ? true : true;
+  printWin.document.open();
+  printWin.document.write(`<!doctype html><html><head><meta charset="utf-8">
+    <title>Certificate</title>${styles}
+    <style>
+      @page{size:A4 landscape;margin:0}
+      html,body{margin:0!important;padding:0!important;width:297mm;height:210mm;background:#fff!important;overflow:hidden!important}
+      body{display:flex!important;align-items:center!important;justify-content:center!important}
+      #certPreview{display:block!important;visibility:visible!important;position:relative!important;
+        width:297mm!important;height:210mm!important;max-width:none!important;max-height:none!important;
+        margin:0!important;padding:0!important;overflow:hidden!important;box-sizing:border-box!important;
+        transform:none!important;box-shadow:none!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+    </style>
+  </head><body>${cert.outerHTML}</body></html>`);
+  printWin.document.close();
+  printWin.focus();
+
+  const doPrint=()=>{ printWin.print(); };
+  if(printWin.document.fonts && printWin.document.fonts.ready){
+    printWin.document.fonts.ready.then(()=>setTimeout(doPrint,250));
+  }else{
+    setTimeout(doPrint,500);
   }
-  function textTargets(){
-    return [...document.querySelectorAll('h1,h2,h3,h4,p,span,div,strong,b')].filter(e=>{
-      const x=(e.textContent||'').trim();
-      return x.length>2 && x.length<80;
-    });
-  }
-  function updateCertificate(p){
-    const all=textTargets();
-    const oldNames=['Vidyanshu Anand','Aarav Sharma','Ananya Singh','Rohan Verma','Priya Gupta','Aditya Mishra','Sneha Yadav','Vivek Kumar','Ishita Jain','Kunal Tiwari','Neha Patel','Rahul Singh','Meera Joshi'];
-    let nameEl=all.find(e=>oldNames.includes((e.textContent||'').trim()));
-    if(nameEl) nameEl.textContent=p.name;
-    const idEl=all.find(e=>/^CERT-\d+$/i.test((e.textContent||'').trim()));
-    if(idEl) idEl.textContent=p.certificate_id;
-    const emailEl=all.find(e=>/example\.com$/.test((e.textContent||'').trim()));
-    if(emailEl) emailEl.textContent=p.email;
-    const roleEl=all.find(e=>['Participant','Winner','Runner-up'].includes((e.textContent||'').trim()));
-    if(roleEl) roleEl.textContent=p.role;
-    const eventEl=all.find(e=>/Tech Fest 2026|Certificate of Participation/i.test((e.textContent||'').trim()));
-    if(eventEl && /Tech Fest 2026/i.test(eventEl.textContent||'')) eventEl.textContent=p.event;
-  }
-  function render(){
-    const old=document.querySelector('.cf-bulk-nav'); if(old) old.remove();
-    const headings=[...document.querySelectorAll('h1,h2,h3')];
-    const anchor=headings.find(e=>/generate|certificate/i.test(e.textContent||'')) || document.querySelector('main') || document.body;
-    const nav=document.createElement('div'); nav.className='cf-bulk-nav';
-    nav.innerHTML=`<div><div class="cf-counter">Participant ${index+1} of ${people.length}</div><div class="cf-name">${people[index].name} · ${people[index].certificate_id}</div></div>
-      <div class="cf-actions"><button type="button" id="cfPrev">← Previous</button><button type="button" class="primary" id="cfSave">Save as PDF</button><button type="button" id="cfNext">Next Participant →</button></div>`;
-    anchor.parentNode.insertBefore(nav,anchor.nextSibling);
-    document.getElementById('cfPrev').disabled=index===0;
-    document.getElementById('cfNext').disabled=index===people.length-1;
-    document.getElementById('cfPrev').onclick=()=>{if(index>0){index--;render();}};
-    document.getElementById('cfNext').onclick=()=>{if(index<people.length-1){index++;render();}};
-    document.getElementById('cfSave').onclick=()=>{
-      saved.add(people[index].certificate_id);
-      const oldTitle=document.title; document.title=people[index].certificate_id+' - '+people[index].name;
-      window.print();
-      setTimeout(()=>document.title=oldTitle,500);
-      const s=document.querySelector('.cf-bulk-status'); if(s) s.textContent='✓ Saved/printed '+people[index].certificate_id+' · '+people[index].name;
-    };
-    let st=document.querySelector('.cf-bulk-status'); if(!st){st=document.createElement('div');st.className='cf-bulk-status';nav.parentNode.insertBefore(st,nav.nextSibling);}
-    st.textContent=saved.has(people[index].certificate_id)?'✓ Already saved':'Ready to generate';
-    updateCertificate(people[index]);
-  }
-  function setup(){
-    const input=document.querySelector('input[type="file"]');
-    if(input){
-      input.addEventListener('change',()=>{
-        const f=input.files && input.files[0]; if(!f)return;
-        const reader=new FileReader();
-        reader.onload=()=>{
-          const lines=String(reader.result).split(/\r?\n/).filter(Boolean);
-          if(lines.length<2)return;
-          const headers=lines[0].split(',').map(x=>x.trim().toLowerCase());
-          const idxOf=(names)=>{for(const n of names){const i=headers.indexOf(n);if(i>=0)return i}return -1};
-          const ni=idxOf(['name','participant','full_name']), ei=idxOf(['email']), ci=idxOf(['certificate_id','id']), ri=idxOf(['role','type']), co=idxOf(['course']), ev=idxOf(['event']);
-          const parsed=lines.slice(1).map((line,i)=>{
-            const cols=line.split(',').map(x=>x.trim().replace(/^"|"$/g,''));
-            return {certificate_id:ci>=0?cols[ci]:`CERT-${String(i+1).padStart(3,'0')}`,name:ni>=0?cols[ni]:'Participant '+(i+1),email:ei>=0?cols[ei]:'',course:co>=0?cols[co]:'',role:ri>=0?cols[ri]:'Participant',event:ev>=0?cols[ev]:'Event Certificate'};
-          }).filter(x=>x.name);
-          if(parsed.length){people=parsed;index=0;render();}
-        };
-        reader.readAsText(f);
-      });
-    }
-    render();
-  }
-  // Keep controls only on the Generate page; the project uses a single-page UI.
-  setTimeout(setup,300);
 })();
 </script>
 <script>
@@ -485,22 +420,7 @@ function add(){if(document.querySelector('.cf-sec'))return;let n=document.queryS
 setTimeout(()=>{add();new MutationObserver(add).observe(document.body,{childList:true,subtree:true})},500);
 })();
 </script>
-<script id="cf-pdf-final-js">
-(function(){
-  document.addEventListener('click', function(e){
-    const b=e.target.closest('#cfSave');
-    if(!b)return;
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    const old=document.title;
-    const name=document.getElementById('certName')?.textContent?.trim()||'Certificate';
-    const id=document.getElementById('certId')?.textContent?.trim()||'';
-    document.title=(id?id+' - ':'')+name;
-    window.print();
-    setTimeout(()=>document.title=old,800);
-  }, true);
-})();
-</script>
+
 <script id="cf-pdf-exact-layout">
 (function(){
   let parent=null,next=null,sheet=null,cert=null;
@@ -523,30 +443,5 @@ setTimeout(()=>{add();new MutationObserver(add).observe(document.body,{childList
   window.addEventListener('afterprint',after);
 })();
 </script>
-<script id="cf-save-pdf-handler">
-(function(){
-  function isSavePdf(el){
-    if(!el) return false;
-    const text=(el.innerText||el.textContent||'').trim().toLowerCase();
-    const id=(el.id||'').toLowerCase();
-    const cls=(el.className||'').toString().toLowerCase();
-    return id==='cfsave' || /save\s*\/?\s*print|save\s+as\s+pdf|print\s*\/?\s*pdf/.test(text)
-           || /save.*pdf|pdf.*save/.test(id+' '+cls);
-  }
 
-  document.addEventListener('click', function(e){
-    const el=e.target.closest('button,a,[role="button"]');
-    if(!isSavePdf(el)) return;
-
-    e.preventDefault();
-    e.stopPropagation();
-    if(e.stopImmediatePropagation) e.stopImmediatePropagation();
-
-    const oldTitle=document.title;
-    document.title='Certificate';
-    setTimeout(function(){ window.print(); }, 0);
-    setTimeout(function(){ document.title=oldTitle; }, 1200);
-  }, true);
-})();
-</script>
 </body></html>
