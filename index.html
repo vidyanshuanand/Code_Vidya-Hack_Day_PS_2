@@ -217,6 +217,89 @@ html,body{max-width:100%;overflow-x:hidden}
   #certPreview .qr { display:block !important; }
 }
 </style>
+
+<style id="cf-final-certificate-polish">
+/* Certificate composition: balanced vertical rhythm and no oversized empty gap */
+#certPreview{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+  box-sizing:border-box !important;
+  padding:72px 90px 92px !important;
+  gap:0 !important;
+}
+#certPreview .ctop{
+  margin:0 0 14px !important;
+  line-height:1.3 !important;
+}
+#certPreview h3{
+  margin:0 0 9px !important;
+  line-height:1.12 !important;
+  max-width:78% !important;
+}
+#certPreview .rule{margin:0 auto 15px !important}
+#certPreview .presented{margin:0 0 7px !important}
+#certPreview .name{
+  margin:0 0 10px !important;
+  line-height:1.12 !important;
+  max-width:78% !important;
+}
+#certPreview .event{
+  margin:0 !important;
+  max-width:76% !important;
+  padding:0 !important;
+  line-height:1.45 !important;
+}
+#certPreview .dateLine{
+  margin-top:13px !important;
+  line-height:1.2 !important;
+}
+#certPreview .seal{
+  width:68px !important;
+  height:68px !important;
+  right:28px !important;
+  top:26px !important;
+  line-height:1.15 !important;
+  font-size:7px !important;
+  padding:5px !important;
+  box-sizing:border-box !important;
+}
+#certPreview .meta{left:38px !important;bottom:27px !important}
+#certPreview .signature{right:112px !important;bottom:23px !important}
+#certPreview .qr{right:28px !important;bottom:27px !important;width:64px !important;height:64px !important}
+
+@media (max-width:900px){
+  #certPreview{padding:58px 60px 82px !important}
+  #certPreview h3{font-size:27px !important}
+  #certPreview .name{font-size:25px !important}
+  #certPreview .event{font-size:11px !important;max-width:80% !important}
+}
+@media print{
+  @page{size:A4 landscape;margin:0}
+  html,body{margin:0!important;padding:0!important;background:#fff!important}
+  body *{visibility:hidden!important}
+  #certPreview,#certPreview *{visibility:visible!important}
+  #certPreview{
+    position:absolute!important;
+    left:0!important;
+    top:0!important;
+    width:100vw!important;
+    height:100vh!important;
+    max-width:none!important;
+    max-height:none!important;
+    min-height:0!important;
+    margin:0!important;
+    border-radius:0!important;
+    box-shadow:none!important;
+    overflow:hidden!important;
+    transform:none!important;
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
+}
+</style>
 </head>
 <body>
 <div class="app"><aside class="side"><div class="brand"><div class="logo">CF</div><div class="bt"><b>CertiFlow AI</b><small>Certificate Intelligence</small></div></div><div class="nav"><button class="active" data-page="dashboard">▦ <span class="nt">Dashboard</span></button><button data-page="participants">◉ <span class="nt">Participants</span></button><button data-page="review">✓ <span class="nt">AI Review</span></button><button data-page="generate">▣ <span class="nt">Generate</span></button><button data-page="verify">⌕ <span class="nt">Verify</span></button></div><div class="sidefoot">Vidya Hack Solo • PS 2</div></aside>
@@ -242,7 +325,7 @@ html,body{max-width:100%;overflow-x:hidden}
   <div class="generate-layout">
     <section class="card studio-card">
       <div class="studio-head"><div><div class="eyebrow">LIVE PREVIEW</div><h2>Certificate template</h2></div><span class="live-dot"><i></i> Ready to publish</span></div>
-      <div class="preview-stage"><div class="cert" id="certPreview"><div class="seal">CODE<br>VIDYA<br>2026</div><div class="ctop">CODE VIDYA • OFFICIAL RECOGNITION</div><h3 id="certTitle">Certificate of Participation</h3><div class="rule"></div><div class="presented">This certificate is proudly presented to</div><div class="name" id="certName">Vidyanshu Anand</div><div class="event" id="certEventText">for successfully participating in <b>Code Vidya Hack Day</b> and contributing to the event with enthusiasm and dedication.</div><div class="dateLine" id="certDate">31 August 2026</div><div class="meta">Certificate ID: <b id="certId">CVH26-DEMO01</b></div><div class="signature"><b id="issuerName">Code Vidya</b><span>Authorized Signature</span></div><div id="qrcode" class="qr"></div></div></div>
+      <div class="preview-stage"><div class="cert" id="certPreview"><div class="seal">CODE<br>VIDYA<br>HACK DAY</div><div class="ctop">CODE VIDYA • OFFICIAL RECOGNITION</div><h3 id="certTitle">Certificate of Participation</h3><div class="rule"></div><div class="presented">This certificate is proudly presented to</div><div class="name" id="certName">Vidyanshu Anand</div><div class="event" id="certEventText">for successfully participating in <b>Code Vidya Hack Day</b> and contributing to the event with enthusiasm and dedication.</div><div class="dateLine" id="certDate">31 August 2026</div><div class="meta">Certificate ID: <b id="certId">CVH26-DEMO01</b></div><div class="signature"><b id="issuerName">Code Vidya</b><span>Authorized Signature</span></div><div id="qrcode" class="qr"></div></div></div>
       <div class="preview-footer"><span>Preview updates instantly</span><span>•</span><span>Print-ready A4 landscape</span></div><div class="template-gallery"><div class="template-gallery-head"><h3>Certificate templates</h3><span id="templateLabel">Modern Gold • selected</span></div><div class="template-grid" role="listbox" aria-label="Certificate templates"><button class="template-option active" type="button" data-template="gold" aria-selected="true"><div class="template-thumb thumb-gold"><span>CLASSIC GOLD</span></div><span class="template-name">Modern Gold</span><span class="template-meta">Elegant • formal</span></button><button class="template-option" type="button" data-template="navy" aria-selected="false"><div class="template-thumb thumb-navy"><span>EXECUTIVE</span></div><span class="template-name">Executive Navy</span><span class="template-meta">Bold • premium</span></button><button class="template-option" type="button" data-template="pearl" aria-selected="false"><div class="template-thumb thumb-pearl"><span>PEARL MINIMAL</span></div><span class="template-name">Pearl Minimal</span><span class="template-meta">Clean • modern</span></button><button class="template-option" type="button" data-template="emerald" aria-selected="false"><div class="template-thumb thumb-emerald"><span>EMERALD HONORS</span></div><span class="template-name">Emerald Honors</span><span class="template-meta">Fresh • distinctive</span></button><button class="template-option" type="button" data-template="royal" aria-selected="false"><div class="template-thumb thumb-royal"><span>ROYAL IVORY</span></div><span class="template-name">Royal Ivory</span><span class="template-meta">Refined • ceremonial</span></button><button class="template-option" type="button" data-template="aurora" aria-selected="false"><div class="template-thumb thumb-aurora"><span>AURORA MINT</span></div><span class="template-name">Aurora Mint</span><span class="template-meta">Fresh • graceful</span></button><button class="template-option" type="button" data-template="sapphire" aria-selected="false"><div class="template-thumb thumb-sapphire"><span>SAPPHIRE CLASSIC</span></div><span class="template-name">Sapphire Classic</span><span class="template-meta">Academic • refined</span></button><button class="template-option" type="button" data-template="rose" aria-selected="false"><div class="template-thumb thumb-rose"><span>ROSE SIGNATURE</span></div><span class="template-name">Rose Signature</span><span class="template-meta">Elegant • warm</span></button><button class="template-option" type="button" data-template="midnight" aria-selected="false"><div class="template-thumb thumb-midnight"><span>MIDNIGHT LUXE</span></div><span class="template-name">Midnight Luxe</span><span class="template-meta">Premium • modern</span></button><button class="template-option" type="button" data-template="linen" aria-selected="false"><div class="template-thumb thumb-linen"><span>LINEN EDITORIAL</span></div><span class="template-name">Linen Editorial</span><span class="template-meta">Editorial • classic</span></button><button class="template-option" type="button" data-template="prestige" aria-selected="false"><div class="template-thumb thumb-prestige"><span>PRESTIGE</span></div><span class="template-name">Prestige Black</span><span class="template-meta">Formal • executive</span></button></div></div>
     </section>
     <aside class="card controls-card">
