@@ -122,31 +122,99 @@ html,body{max-width:100%;overflow-x:hidden}
 <style>
 .cf-sec{margin:16px 0;padding:16px;border:1px solid #ffffff22;border-radius:16px;background:#ffffff08}.cf-sec-head{display:flex;justify-content:space-between}.cf-sec-badge{color:#2ad2a0;font-size:11px;padding:5px 9px;border:1px solid #2ad2a055;border-radius:99px}.cf-sec-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}.cf-sec-item{padding:12px;border:1px solid #ffffff12;border-radius:12px}.cf-sec-item b{font-size:12px}.cf-sec-item span{display:block;font-size:11px;opacity:.6;margin-top:4px}.cf-sec-note{font-size:11px;opacity:.6;margin-top:12px;line-height:1.5}@media(max-width:700px){.cf-sec-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:430px){.cf-sec-grid{grid-template-columns:1fr}.cf-sec-head{gap:8px;flex-direction:column}}
 </style>
-<style id="cf-print-fix">
+<style id="cf-pdf-final-fix">
 @media print {
   @page { size: A4 landscape; margin: 0; }
-  html, body { margin: 0 !important; padding: 0 !important; background: #fff !important; }
-  body * { visibility: hidden !important; }
-  .certificate-print-target,
-  .certificate-print-target * { visibility: visible !important; }
-  .certificate-print-target {
-    position: absolute !important;
-    left: 0 !important;
-    top: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    max-width: none !important;
-    max-height: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    box-sizing: border-box !important;
-    overflow: hidden !important;
-    transform: none !important;
-    box-shadow: none !important;
+  html, body {
+    width:100% !important;
+    height:100% !important;
+    margin:0 !important;
+    padding:0 !important;
+    overflow:hidden !important;
+    background:#fff !important;
   }
-  .cf-bulk-nav, .cf-bulk-status, .cf-security-panel,
-  .cf-template-gallery, nav, aside, header, footer,
-  button, input, select, textarea { display: none !important; }
+
+  /* Hide the entire app for printing. */
+  body > * { display:none !important; }
+
+  /* Show ONLY the actual certificate preview. */
+  body > .app { display:block !important; }
+  .app > * { display:none !important; }
+  .app .main { display:block !important; width:100% !important; margin:0 !important; padding:0 !important; }
+  .app .main > * { display:none !important; }
+
+  .app .main .page.active { 
+    display:block !important;
+    position:static !important;
+    width:100% !important;
+    min-height:100vh !important;
+    padding:0 !important;
+    margin:0 !important;
+    background:#fff !important;
+  }
+
+  .app .main .page.active > * { display:none !important; }
+
+  /* Walk to the certificate preview without relying on generated classes. */
+  .app .main .page.active .generate-shell { 
+    display:block !important; 
+    width:100% !important;
+    margin:0 !important;
+    padding:0 !important;
+  }
+  .app .main .page.active .generate-shell > * { display:none !important; }
+  .app .main .page.active .generate-shell .generate-layout {
+    display:block !important;
+    width:100% !important;
+    margin:0 !important;
+    padding:0 !important;
+  }
+  .app .main .page.active .generate-shell .generate-layout > * { display:none !important; }
+  .app .main .page.active .generate-shell .generate-layout .studio-card {
+    display:block !important;
+    width:100% !important;
+    margin:0 !important;
+    padding:0 !important;
+    border:0 !important;
+    background:transparent !important;
+    box-shadow:none !important;
+  }
+  .app .main .page.active .studio-card > * { display:none !important; }
+  .app .main .page.active .studio-card .preview-stage {
+    display:flex !important;
+    width:100vw !important;
+    height:100vh !important;
+    margin:0 !important;
+    padding:0 !important;
+    align-items:center !important;
+    justify-content:center !important;
+    overflow:hidden !important;
+    background:#fff !important;
+  }
+  #certPreview {
+    display:block !important;
+    visibility:visible !important;
+    position:relative !important;
+    width:100vw !important;
+    height:70.7vw !important;
+    max-width:100vw !important;
+    max-height:100vh !important;
+    margin:auto !important;
+    padding:38px 48px !important;
+    box-sizing:border-box !important;
+    transform:none !important;
+    overflow:hidden !important;
+    opacity:1 !important;
+    box-shadow:none !important;
+    -webkit-print-color-adjust:exact !important;
+    print-color-adjust:exact !important;
+  }
+  #certPreview * {
+    display:revert !important;
+    visibility:visible !important;
+    opacity:1 !important;
+  }
+  #certPreview .qr { display:block !important; }
 }
 </style>
 </head>
@@ -345,29 +413,20 @@ function add(){if(document.querySelector('.cf-sec'))return;let n=document.queryS
 setTimeout(()=>{add();new MutationObserver(add).observe(document.body,{childList:true,subtree:true})},500);
 })();
 </script>
-<script id="cf-print-fix-js">
+<script id="cf-pdf-final-js">
 (function(){
-  function findCertificate(){
-    const candidates=[...document.querySelectorAll('[class*="certificate"],[id*="certificate"]')];
-    return candidates
-      .filter(e=>e.offsetWidth>350 && e.offsetHeight>180)
-      .sort((a,b)=>(b.offsetWidth*b.offsetHeight)-(a.offsetWidth*a.offsetHeight))[0] || null;
-  }
-  window.addEventListener('beforeprint',()=>{
-    const cert=findCertificate();
-    if(cert) cert.classList.add('certificate-print-target');
-  });
-  window.addEventListener('afterprint',()=>{
-    document.querySelectorAll('.certificate-print-target').forEach(e=>e.classList.remove('certificate-print-target'));
-  });
-  // Replace the bulk navigation Save as PDF action with print-targeted printing.
-  document.addEventListener('click',e=>{
-    const btn=e.target.closest('#cfSave');
-    if(!btn)return;
+  document.addEventListener('click', function(e){
+    const b=e.target.closest('#cfSave');
+    if(!b)return;
     e.preventDefault();
     e.stopImmediatePropagation();
+    const old=document.title;
+    const name=document.getElementById('certName')?.textContent?.trim()||'Certificate';
+    const id=document.getElementById('certId')?.textContent?.trim()||'';
+    document.title=(id?id+' - ':'')+name;
     window.print();
-  },true);
+    setTimeout(()=>document.title=old,800);
+  }, true);
 })();
 </script>
 </body></html>
